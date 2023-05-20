@@ -1,0 +1,215 @@
+from tkinter import *
+from PIL import ImageTk, Image,ImageDraw,ImageFont
+
+root = Tk()
+root.title("command window")
+root.geometry("900x550")
+img= ImageTk.PhotoImage(Image.open("project_converter\photo.png"))
+img1=Label(root,image=img)
+img1.pack()
+
+Title= Label(root,text="DELTA-STAR CONVERTER",font="Times 35 ",height=1,width=22,fg='gray29')
+Title.place(x=180,y=120)
+
+Entry_R1= IntVar()
+Entry_R2= IntVar()
+Entry_R3= IntVar()
+
+
+def Delta():
+    root.destroy()
+    top=Tk()
+    top.title('hello')
+    top.geometry("900x550")
+    img= ImageTk.PhotoImage(Image.open("project_converter\star_image.png"))
+    img1=Label(top,image=img)
+    img1.pack()
+    Head= Label(top,text="STAR TO DELTA CONVERSION",font='Times 35',height=1,width=26,fg='gray29' )
+    Head.place(x=110,y=90)
+
+    R1_label= Label(top,text='Value of R1',font='Times 10')
+    R1_label.place(x=90,y=250)
+    R1= Entry(top, textvariable= Entry_R1,font='SansSerif 14' )
+    R1.place(x=180,y=248)
+
+    R2_label= Label(top,text='Value of R2',font='Times 10')
+    R2_label.place(x=90,y=300)
+    R2= Entry(top, textvariable= Entry_R2,font='SansSerif 14' )
+    R2.place(x=180,y=298)
+
+    R3_label= Label(top,text='Value of R3',font='Times 10')
+    R3_label.place(x=90,y=350)
+    R3= Entry(top, textvariable= Entry_R3,font='SansSerif 14' )
+    R3.place(x=180,y=348)
+
+
+
+    def Confirm():
+        global ResultLabel
+        global R12ResultLabel
+        global R13ResultLabel
+        global R23ResultLabel
+        R1input =R1.get()
+        R2input =R2.get()
+        R3input =R3.get()
+
+
+        try :
+            CheckResistance =(float(R1input) > 0 and float(R2input) >0 and float(R3input)>0)
+
+
+            if(CheckResistance):
+                R12ResultLabel=Label(top,text = " R12 = "+str( ( float(R1input) + float(R2input) + (( float(R1input) * float(R2input) ))/(float(R3input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R12ResultLabel.place(x=190,y=460)
+                R13ResultLabel=Label(top,text = " R13 = "+str( ( float(R1input) + float(R3input) + (( float(R1input) * float(R3input) ))/(float(R2input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R13ResultLabel.place(x=190,y=480)
+                R23ResultLabel=Label(top,text = " R23 = "+str( ( float(R2input) + float(R3input) + (( float(R2input) * float(R3input) ))/(float(R1input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R23ResultLabel.place(x=190,y=500)
+
+            else:
+                ResultLabel=Label(text = "Please enter valid values for resistances",fg="red",font=("Helvetica",15,"bold"))
+
+                R12ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+                R13ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+                R23ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+
+        except:
+            ResultLabel=Label(text = "Please enter valid values for resistances",fg="red",font=("Helvetica",15,"bold"))
+            ResultLabel.place(x=190,y=460)
+            R12ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+            R13ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+            R23ResultLabel=Label(text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+
+
+
+    def Reset():
+
+        for  widget in top.winfo_children():
+            if isinstance(widget,Entry):
+                widget.delete(0,'end')
+            try:
+                ResultLabel.config(text='',fg='white smoke')
+            except:
+                R12ResultLabel.config(text='',fg='light gray')
+                R13ResultLabel.config(text='',fg='light gray')
+                R23ResultLabel.config(text='',fg='light gray')
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Reset_button= Button(top,text='Reset',bg='white',font='SansSerif 10',command=Reset)
+    Reset_button.place(x=280,y=400)
+    Confirm_button= Button(top,text='Confirm',bg='white',font='SansSerif 10',command=Confirm)
+    Confirm_button.place(x=210,y=400)
+
+
+
+    top.mainloop()
+
+
+
+def Star():
+    root.destroy()
+    top=Tk()
+    top.title('hello')
+    top.geometry("900x550")
+    img= ImageTk.PhotoImage(Image.open("project_converter\delta_image.png"))
+    img1=Label(top,image=img)
+    img1.pack()
+    Head= Label(top,text="STAR TO DELTA CONVERSION",font='Times 35',height=1,width=26,fg='gray29' )
+    Head.place(x=110,y=90)
+
+    R1_label= Label(top,text='Value of R12',font='Times 10')
+    R1_label.place(x=90,y=250)
+    R1= Entry(top, textvariable= Entry_R1,font='SansSerif 14' )
+    R1.place(x=180,y=248)
+
+    R2_label= Label(top,text='Value of R13',font='Times 10')
+    R2_label.place(x=90,y=300)
+    R2= Entry(top, textvariable= Entry_R2,font='SansSerif 14' )
+    R2.place(x=180,y=298)
+
+    R3_label= Label(top,text='Value of R23',font='Times 10')
+    R3_label.place(x=90,y=350)
+    R3= Entry(top, textvariable= Entry_R3,font='SansSerif 14' )
+    R3.place(x=180,y=348)
+
+
+
+
+
+
+
+    def Confirm():
+        global R1ResultLabel
+        global R2ResultLabel
+        global R3ResultLabel
+        R12input=R1.get()
+        R13input=R2.get()
+        R23input=R3.get()
+        try :
+            CheckResistance =(float(R12input) > 0 and float(R13input) >0 and float(R23input)>0)
+
+
+            if(CheckResistance):
+
+
+                R1ResultLabel=Label(top,text = " R1 = "+str((float(R12input) * float(R13input)/(float(R12input) + float(R13input) + float(R23input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R1ResultLabel.place(x=190,y=460)
+                R2ResultLabel=Label(top,text = " R2 = "+str((float(R12input) * float(R23input)/(float(R12input) + float(R13input) + float(R23input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R2ResultLabel.place(x=190,y=480)
+                R3ResultLabel=Label(top,text = " R3 = "+str((float(R13input) * float(R23input)/(float(R12input) + float(R13input) + float(R23input))))[:10]+" Ohm(s)",width=20,font=("Helvetica",12,"bold"))
+                R3ResultLabel.place(x=190,y=500)
+            else:
+                ResultLabel=Label(top,text = "Please enter valid values for resistances",fg="red",font=("Helvetica",15,"bold"))
+
+                R1ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+                R2ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+                R3ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+
+        except:
+            ResultLabel=Label(top,text = "Please enter valid values for resistances",fg="red",font=("Helvetica",15,"bold"))
+            ResultLabel.place(x=190,y=460)
+            R1ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+            R2ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+            R3ResultLabel=Label(top,text = "                                                     ",width=20,font=("Helvetica",12,"bold"))
+
+
+
+    def Reset():
+
+        for  widget in top.winfo_children():
+            if isinstance(widget,Entry):
+                widget.delete(0,'end')
+            try:
+                R1ResultLabel.config(text='',fg='light gray')
+                R2ResultLabel.config(text='',fg='light gray')
+                R3ResultLabel.config(text='',fg='light gray')
+            except:
+                ResultLabel.config(text='',fg='white smoke')
+
+    Reset_button= Button(top,text='Reset',bg='white',font='SansSerif 10',command=Reset)
+    Reset_button.place(x=280,y=400)
+    Confirm_button= Button(top,text='Confirm',bg='white',font='SansSerif 10',command=Confirm)
+    Confirm_button.place(x=210,y=400)
+
+    top.mainloop()
+
+
+
+Delta_button=Button(root,text='DELTA',bg='white',font='Times 12',height=1,width=10,command=Delta)
+Delta_button.place(x=300,y=220)
+Star_button= Button(root,text='STAR',bg='white',font='Times 12',height=1,width=10,command=Star)
+Star_button.place(x=500,y=220)
+Exit_button= Button(root,text='EXIT',command=root.destroy)
+Exit_button.place(x=435,y=350)
+root.mainloop()
